@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;}
+
+</style>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=kOkmIaGKrMbxHlAtudGMvtYi"></script>
+<title>地图</title>
+</head>
+<body>
+<div id="allmap"></div>
+</body>
+</html>
+<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+<script src="js/map.js"></script>
+
+
+
+<script type="text/javascript">
+
+// 百度地图API功能
+    var map = new BMap.Map('allmap');
+	var point = new BMap.Point(120.112428,30.310366);//经纬度
+	map.centerAndZoom(point,18);
+    map.setZoom(18);  //将视图切换到指定的缩放等级，中心点坐标不变
+    map.disableScrollWheelZoom();
+	var  mapStyle = {
+		style:"green",
+		features: ["road", "building","water","land","point"], 
+	}
+        map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+
+	map.setMapStyle(mapStyle);
+    
+    var pt = new BMap.Point(114.277504,30.611521);//经纬度
+	var marker = new BMap.Marker(point);  // 创建标注
+	map.addOverlay(marker);               // 将标注添加到地图中
+	//marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+	
+	var content = '';
+
+    //创建检索信息窗口对象
+    var searchInfoWindow = null;
+	searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
+			title  : "杭州臻佃餐饮管理有限公司",      //标题
+			width  : 290,             //宽度
+			height : 0,              //高度
+			panel  : "panel",         //检索结果面板
+			enableAutoPan : true,     //自动平移
+			searchTypes   :[
+				BMAPLIB_TAB_SEARCH,   //周边检索
+				BMAPLIB_TAB_TO_HERE,  //到这里去
+				BMAPLIB_TAB_FROM_HERE //从这里出发
+			]
+		});
+	marker.addEventListener("click", function(e){
+	    searchInfoWindow.open(marker);
+    })
+</script>
+
+
+
